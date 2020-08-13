@@ -184,35 +184,27 @@ public class Platform extends JPanel {
 			
 			x = (int)(Math.random() * (double)gameSize);
 			y = (int)(Math.random() * (double)gameSize);
-			System.out.println("Replacing apple " + x + " " + y);
-
-			System.out.println(isPlaced);
-			System.out.println("snake length " + snake.getLength());
-			System.out.println("snake body size " + snake.getBody().size());
 
 			i = 0;
 			// On verifie si on ne deplace pas la pomme sur le serpent
 			while (isPlaced == true && i<snake.getLength()) {
 				bodyCell = snake.getBody().get(i);
-				if (x == bodyCell.getX() || y == bodyCell.getY()) {
+				if (x == bodyCell.getX() && y == bodyCell.getY()) {
 					isPlaced = false;
 				}
 				i++;
 			}
-
-			System.out.println("apples.size " + apples.size());
 
 			// On verifie si on ne deplace pas la pomme sur une autre pomme
 			i = 0;
 			while (isPlaced == true && i<apples.size()) {
 				fruit = apples.get(i);
-				if (x == fruit.getX() || y == fruit.getY()) {
+				if (x == fruit.getX() && y == fruit.getY()) {
 					isPlaced = false;
 				}
 				i++;
 			}
 
-			System.out.println("                 " + isPlaced);
 			// Si cest bon on la deplace
 			if (isPlaced) {
 				f.setX(x);

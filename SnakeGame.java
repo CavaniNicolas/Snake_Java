@@ -42,14 +42,14 @@ public class SnakeGame extends JFrame implements KeyListener {
 		while (playing) {
 			repaint();
 
-			// platform.updateSpeed();
-			// sleep(platform.getSpeed());
-			sleep(160);
+			platform.updateSpeed();
+			sleep(platform.getSpeed());
+			// sleep(160);
 
 			platform.moveSnake();
-			sleep(160);
+
 			platform.checkCollisions();
-			sleep(160);
+
 			platform.setAllowInput(true);
 			System.out.println(i++);
 		}
