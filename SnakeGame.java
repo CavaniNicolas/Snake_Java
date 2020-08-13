@@ -38,7 +38,6 @@ public class SnakeGame extends JFrame implements KeyListener {
 
 
 	public void startGame() {
-		int i=0;
 		while (playing) {
 			repaint();
 
@@ -51,7 +50,6 @@ public class SnakeGame extends JFrame implements KeyListener {
 			platform.checkCollisions();
 
 			platform.setAllowInput(true);
-			System.out.println(i++);
 		}
 		repaint();
 	}
