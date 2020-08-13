@@ -38,12 +38,14 @@ public class Snake {
 		this.length = 3;
 	}
 
+
 	/**Dessine le serpent */
 	public void drawSnake(Graphics g) {
 		for (int i=0; i<body.size(); i++) {
 			body.get(i).drawBodyCell(g);
 		}
 	}
+
 
 	/**Actualise les images (par rapport aux directions) du corps du serpent
 	 * Le dernier element doit etre la queue
@@ -54,6 +56,7 @@ public class Snake {
 
 		body.get(body.size()-1).setImage(this.tailIm);
 	}
+
 
 	public void moveSnake(Dir currentDir) {
 
@@ -81,6 +84,8 @@ public class Snake {
 		updateBodyImages();
 	}
 
+
+
 	public BodyCell getHead() {
 		return this.body.get(0);
 	}
@@ -92,7 +97,6 @@ public class Snake {
 	public ArrayList<BodyCell> getBody() {
 		return body;
 	}
-
 
 	public BufferedImage getHeadIm() {
 		return headIm;

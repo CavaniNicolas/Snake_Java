@@ -1,8 +1,6 @@
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 
 public class SnakeGame extends JFrame implements KeyListener {
 	private static final long serialVersionUID = 1L;
@@ -27,7 +25,9 @@ public class SnakeGame extends JFrame implements KeyListener {
 		repaint();
 
 		startGame();
+		
 	}
+
 
 	public void initGame() {
 		platform.loadAllImages();
@@ -36,21 +36,26 @@ public class SnakeGame extends JFrame implements KeyListener {
 		platform.createApples();
 	}
 
+
 	public void startGame() {
+		int i=0;
 		while (playing) {
-			platform.createApples();
 			repaint();
 
-			platform.updateSpeed();
-			sleep(platform.getSpeed());
-			// sleep(150);
+			// platform.updateSpeed();
+			// sleep(platform.getSpeed());
+			sleep(160);
 
 			platform.moveSnake();
+			sleep(160);
 			platform.checkCollisions();
+			sleep(160);
 			platform.setAllowInput(true);
+			System.out.println(i++);
 		}
 		repaint();
 	}
+
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -78,14 +83,7 @@ public class SnakeGame extends JFrame implements KeyListener {
 
 		}
 	}
-	
-	@Override
-	public void keyReleased(KeyEvent event) {
-	}
 
-	@Override
-	public void keyTyped(KeyEvent event) {
-	}
 
 	/**Delay */
 	public void sleep(int time) {
@@ -96,4 +94,15 @@ public class SnakeGame extends JFrame implements KeyListener {
 			e.printStackTrace();
 		}
 	}
+
+
+	@Override
+	public void keyReleased(KeyEvent event) {
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent event) {
+	}
+
 }

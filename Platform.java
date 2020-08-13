@@ -26,12 +26,12 @@ public class Platform extends JPanel {
 	private ArrayList<Fruit> apples = new ArrayList<Fruit>(); // La liste des fruits
 	private BufferedImage appleImage = null; // Image de la pomme
 
-	private int nbApples = 3; // Nombre de pommes max a afficher a l'ecran
+	private int nbApples = 5; // Nombre de pommes max a afficher a l'ecran
 
 	private boolean allowInput;
 	private Dir currentDir = Dir.Left;
 
-	private int speed = 150;
+	private int speed = 160;
 
 	public Platform(int newGameSize) {
 		gameSize = newGameSize;
@@ -119,10 +119,12 @@ public class Platform extends JPanel {
 		}
 	}
 
+
+
 	/**Creer les pommes pour remplir la ArrayList jusqu'au nbApples */
 	public void createApples() {
 
-		int i=0;
+		int i;
 		BodyCell bodyCell;
 		Fruit fruit;
 
@@ -137,6 +139,7 @@ public class Platform extends JPanel {
 			x = (int)(Math.random() * (double)gameSize);
 			y = (int)(Math.random() * (double)gameSize);
 
+			i = 0;
 			// On verifie si on ne place pas la nouvelle pomme sur le serpent
 			while (isPlaced == true && i<snake.getLength()) {
 				bodyCell = snake.getBody().get(i);
@@ -163,20 +166,58 @@ public class Platform extends JPanel {
 		}
 	}
 
-	/**Charge toutes les images une fois dans la memoire */
-	public void loadAllImages() {
-		try {
-			appleImage = ImageIO.read(new File("assets/apple.png"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
-		try {
-			snake.setHeadIm(ImageIO.read(new File("assets/snakeHead.png")));
-			snake.setBodyIm(ImageIO.read(new File("assets/snakeStraightBody.png")));
-			snake.setTailIm(ImageIO.read(new File("assets/snakeTail.png")));
-		} catch (Exception e) {
-			e.printStackTrace();
+	public void replaceApple(Fruit f) {
+		BodyCell bodyCell;
+		Fruit fruit;
+
+		int i = 0;
+
+		int x;
+		int y;
+
+		boolean isPlaced = false;
+		
+		while (isPlaced == false) {
+			
+			isPlaced = true;
+			
+			x = (int)(Math.random() * (double)gameSize);
+			y = (int)(Math.random() * (double)gameSize);
+			System.out.println("Replacing apple " + x + " " + y);
+
+			System.out.println(isPlaced);
+			System.out.println("snake length " + snake.getLength());
+			System.out.println("snake body size " + snake.getBody().size());
+
+			i = 0;
+			// On verifie si on ne deplace pas la pomme sur le serpent
+			while (isPlaced == true && i<snake.getLength()) {
+				bodyCell = snake.getBody().get(i);
+				if (x == bodyCell.getX() || y == bodyCell.getY()) {
+					isPlaced = false;
+				}
+				i++;
+			}
+
+			System.out.println("apples.size " + apples.size());
+
+			// On verifie si on ne deplace pas la pomme sur une autre pomme
+			i = 0;
+			while (isPlaced == true && i<apples.size()) {
+				fruit = apples.get(i);
+				if (x == fruit.getX() || y == fruit.getY()) {
+					isPlaced = false;
+				}
+				i++;
+			}
+
+			System.out.println("                 " + isPlaced);
+			// Si cest bon on la deplace
+			if (isPlaced) {
+				f.setX(x);
+				f.setY(y);
+			}
 		}
 	}
 
@@ -197,7 +238,8 @@ public class Platform extends JPanel {
 			f = apples.get(i);
 			if (snakeHead.getX() == f.getX() && snakeHead.getY() == f.getY()) {
 				snake.setGrow(true);
-				apples.remove(i);
+				//apples.remove(i);
+				replaceApple(f);
 			}
 		}
 
@@ -218,12 +260,34 @@ public class Platform extends JPanel {
 		}
 	}
 
+
 	public void updateSpeed() {
+		if (snake.getLength() <= 10) {
+			this.speed = 160;
+		}
 		if (snake.getLength() > 10) {
-			this.speed = 130;
+			this.speed = 140;
 		}
 		if (snake.getLength() > 20) {
-			this.speed = 110;
+			this.speed = 120;
+		}
+	}
+
+
+	/**Charge toutes les images une fois dans la memoire */
+	public void loadAllImages() {
+		try {
+			appleImage = ImageIO.read(new File("assets/apple.png"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		try {
+			snake.setHeadIm(ImageIO.read(new File("assets/snakeHead.png")));
+			snake.setBodyIm(ImageIO.read(new File("assets/snakeStraightBody.png")));
+			snake.setTailIm(ImageIO.read(new File("assets/snakeTail.png")));
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
