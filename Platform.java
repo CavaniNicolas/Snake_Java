@@ -143,7 +143,7 @@ public class Platform extends JPanel {
 			// On verifie si on ne place pas la nouvelle pomme sur le serpent
 			while (isPlaced == true && i<snake.getLength()) {
 				bodyCell = snake.getBody().get(i);
-				if (x == bodyCell.getX() || y == bodyCell.getY()) {
+				if (x == bodyCell.getX() && y == bodyCell.getY()) {
 					isPlaced = false;
 				}
 				i++;
@@ -153,7 +153,7 @@ public class Platform extends JPanel {
 			i = 0;
 			while (isPlaced == true && i<apples.size()) {
 				fruit = apples.get(i);
-				if (x == fruit.getX() || y == fruit.getY()) {
+				if (x == fruit.getX() && y == fruit.getY()) {
 					isPlaced = false;
 				}
 				i++;
