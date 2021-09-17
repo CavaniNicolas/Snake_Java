@@ -254,15 +254,64 @@ public class Platform extends JPanel {
 
 
 	public void updateSpeed() {
-		if (snake.getLength() <= 10) {
+		if (snake.getLength() <= 20) {
 			this.speed = 160;
 		}
-		if (snake.getLength() > 10) {
+		if (snake.getLength() > 20) {
 			this.speed = 140;
 		}
-		if (snake.getLength() > 20) {
+		if (snake.getLength() > 40) {
 			this.speed = 120;
 		}
+	}
+
+
+	public void IAMove() {
+		int value = 0;
+
+		Dir nextDir = currentDir;
+
+		if (Math.random() < 0.5) {
+			nextDir = currentDir.turnRight();
+		} else if (Math.random() > 0.5) {
+			nextDir = currentDir.turnLeft();
+		}
+
+		currentDir = nextDir;
+	}
+
+	public int checkCollisionsAhead() {
+		int i = 0;
+		int value = 0;
+		BodyCell snakeHead = snake.getHead();
+		
+		BodyCell bodyCell;
+		Fruit f;
+		// Check les collision avec les pommes
+		for (i=0; i<apples.size(); i++) {
+			f = apples.get(i);
+			if (snakeHead.getX() == f.getX() && snakeHead.getY() == f.getY()) {
+				value = 100;
+			}
+		}
+
+		// Check les collisions avec le serpent (moins le bout de la queue)
+		i = 1;
+		while (i < snake.getBody().size() - 1) {
+			bodyCell = snake.getBody().get(i);
+			if (snakeHead.getX() == bodyCell.getX() && snakeHead.getY() == bodyCell.getY()) {
+				value = -80;
+			}
+			i++;
+		}
+
+		// Check les collisions avec les murs
+		if (snakeHead.getX() < 0 || snakeHead.getX() > gameSize-1
+		|| snakeHead.getY() < 0 || snakeHead.getY() > gameSize-1) {
+			value = -100;
+		}
+
+		return value;
 	}
 
 

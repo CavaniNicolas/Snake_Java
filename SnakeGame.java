@@ -7,6 +7,7 @@ public class SnakeGame extends JFrame implements KeyListener {
 
 	private Platform platform = new Platform();
 	public static boolean playing = true;
+	public boolean solo = true;
 
 	public SnakeGame() {
 		this.setTitle("Snake Game");
@@ -16,7 +17,10 @@ public class SnakeGame extends JFrame implements KeyListener {
 		this.setResizable(false); // mais l'affichage fonctionne quand meme et s'adapte si on redimmensionne :P
 
 		this.setContentPane(platform);
-		this.addKeyListener(this);
+
+		if (solo == true) {
+			this.addKeyListener(this);
+		}
 
 		this.setVisible(true);
 
@@ -44,6 +48,10 @@ public class SnakeGame extends JFrame implements KeyListener {
 			platform.updateSpeed();
 			sleep(platform.getSpeed());
 			// sleep(160);
+
+			if (solo == false) {
+				platform.IAMove();
+			}
 
 			platform.moveSnake();
 
